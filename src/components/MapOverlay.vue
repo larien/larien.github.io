@@ -26,7 +26,7 @@ export default {
             'an overexcited dev',
             'a Golang developer',
             'a backpacker',
-            'a beach appreciator',
+            'a beach lover',
             'a dog mom',
             'a tattoo addict'
       ]
