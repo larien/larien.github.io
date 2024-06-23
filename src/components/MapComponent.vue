@@ -6,14 +6,17 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import '@/assets/mapStyles.css';
-import visitedCountries from '@/assets/visitedCountries.json';
+import instagramPosts from '@/assets/cities.json'; // Import the Instagram posts mock data
+import pinIcon from '@/assets/pin-icon.svg'; // Import the SVG file
 
 export default {
   name: 'MapComponent',
   data() {
     return {
       map: null,
-      geojsonLayer: null
+      geojsonLayer: null,
+      markers: [],
+      visitedCountriesSet: new Set()
     };
   },
   mounted() {
@@ -41,6 +44,8 @@ export default {
             onEachFeature: this.onEachFeature
           }).addTo(this.map);
         });
+
+      this.processInstagramPosts();
     },
     getRandomBlue() {
       const blueTones = [
@@ -49,7 +54,7 @@ export default {
       return blueTones[Math.floor(Math.random() * blueTones.length)];
     },
     styleFeature(feature) {
-      const isVisited = visitedCountries.countries.includes(feature.properties.name);
+      const isVisited = this.visitedCountriesSet.has(feature.properties.name);
       const fillColor = this.getRandomBlue();
 
       return {
@@ -91,6 +96,29 @@ export default {
     },
     moveTooltip(e) {
       e.target.openTooltip(e.latlng);
+    },
+    processInstagramPosts() {
+      const customIcon = L.divIcon({
+        className: 'custom-pin',
+        html: `<img src="${pinIcon}" style="width:30px;height:30px; background-color:white; border-radius:50%;" />`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -30]
+      });
+
+      instagramPosts.forEach(post => {
+        const location = post.location;
+        this.visitedCountriesSet.add(location.country);
+        const marker = L.marker([location.latitude, location.longitude], { icon: customIcon })
+          .bindPopup(`<a href="${post.url}" target="_blank"><b>${location.name}</b></a>`, {
+            className: 'custom-tooltip'
+          })
+          .addTo(this.map);
+        this.markers.push(marker);
+      });
+
+      console.log('Markers added:', this.markers);
+      console.log('Visited countries:', Array.from(this.visitedCountriesSet));
     }
   }
 };

@@ -1,3 +1,17 @@
 {
-  "countries": ["France", "Germany", "Brazil", "Japan"]
+  "countries": [
+    "Japan",
+    "Australia",
+    "New Zealand",
+    "Brazil",
+    "Greece",
+    "Colombia",
+    "Chile",
+    "Argentina",
+    "United States of America",
+    "United Kingdom",
+    "Spain",
+    "Germany",
+    "Italy"
+  ]
 }
