@@ -23,7 +23,7 @@ export default {
     initMap() {
       this.map = L.map(this.$refs.map, {
         minZoom: 2 // Prevent zooming out too much
-      }).setView([20, 0], 2);
+      }).setView([-14.2350, -51.9253], 3); // Coordinates for Brazil and zoom level 3
 
       L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.{ext}', {
         attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under ODbL.',
@@ -42,19 +42,35 @@ export default {
           }).addTo(this.map);
         });
     },
+    getRandomBlue() {
+      const blueTones = [
+        '#014ba0', '#0a5cb8', '#1466c3', '#2174d4', '#3b8eed'
+      ];
+      return blueTones[Math.floor(Math.random() * blueTones.length)];
+    },
     styleFeature(feature) {
-      const continentClass = this.getContinentClass(feature.properties.continent);
       const isVisited = visitedCountries.countries.includes(feature.properties.name);
-      const visitedClass = isVisited ? 'country-visited' : 'country-unvisited';
+      const fillColor = this.getRandomBlue();
 
       return {
-        className: `country-default ${continentClass} ${visitedClass}`
+        fillColor: fillColor,
+        fillOpacity: 0.7,
+        color: isVisited ? '#ffffff' : fillColor,
+        weight: isVisited ? 2 : 0,
+        opacity: 1
       };
     },
     onEachFeature(feature, layer) {
       layer.on({
         mouseover: this.highlightFeature,
-        mouseout: this.resetHighlight
+        mouseout: this.resetHighlight,
+        mousemove: this.moveTooltip
+      });
+      layer.bindTooltip(feature.properties.name, {
+        permanent: false,
+        direction: 'auto',
+        className: 'custom-tooltip',
+        sticky: true
       });
     },
     highlightFeature(e) {
@@ -62,7 +78,7 @@ export default {
       layer.setStyle({
         weight: 3,
         color: '#ffffff',
-        fillOpacity: 0.7
+        fillOpacity: 0.9
       });
 
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -71,24 +87,10 @@ export default {
     },
     resetHighlight(e) {
       this.geojsonLayer.resetStyle(e.target);
+      e.target.closeTooltip();
     },
-    getContinentClass(continent) {
-      switch (continent) {
-        case 'North America':
-          return 'country-north-america';
-        case 'South America':
-          return 'country-south-america';
-        case 'Europe':
-          return 'country-europe';
-        case 'Africa':
-          return 'country-africa';
-        case 'Asia':
-          return 'country-asia';
-        case 'Oceania':
-          return 'country-australia';
-        default:
-          return '';
-      }
+    moveTooltip(e) {
+      e.target.openTooltip(e.latlng);
     }
   }
 };
@@ -99,5 +101,22 @@ export default {
   width: 100%;
   height: 100vh;
   position: relative;
+}
+
+/* Custom tooltip styles */
+.custom-tooltip {
+  background-color: #001f3f;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+}
+
+/* Remove focus outline */
+.leaflet-interactive {
+  outline: none;
 }
 </style>

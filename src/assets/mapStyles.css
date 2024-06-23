@@ -4,43 +4,31 @@
 }
 
 .leaflet-container {
-  background: #0D1B2A; /* Dark background */
-}
-
-.country-default {
-  fill: #1E3A8A; /* Default dark blue for unvisited countries */
-  stroke: #ffffff; /* White borders */
-  stroke-width: 1;
-}
-
-.country-north-america {
-  fill: #0A74DA; /* Light blue for North America */
-}
-
-.country-south-america {
-  fill: #0A84DA; /* Different blue for South America */
-}
-
-.country-europe {
-  fill: #0A94DA; /* Different blue for Europe */
-}
-
-.country-africa {
-  fill: #0AA4DA; /* Different blue for Africa */
-}
-
-.country-asia {
-  fill: #0AB4DA; /* Different blue for Asia */
-}
-
-.country-australia {
-  fill: #0AC4DA; /* Different blue for Australia */
+  background: #001f3f; /* Dark navy background */
 }
 
 .country-visited {
-  fill-opacity: 1;
+  stroke: #ffffff;
+  stroke-width: 2;
 }
 
 .country-unvisited {
-  fill-opacity: 0.5;
+  stroke-width: 0;
+}
+
+/* Remove focus outline */
+.leaflet-interactive {
+  outline: none;
+}
+
+/* Custom tooltip styles */
+.custom-tooltip {
+  background-color: #001f3f;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
 }
