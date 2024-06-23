@@ -6,7 +6,6 @@
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
   import '@/assets/mapStyles.css';
-  import visitedCountries from '@/assets/visitedCountries.json';
   import cities from '@/assets/cities.json'; // Import the Instagram posts mock data
   import pinIcon from '@/assets/pin-icon.svg'; // Import the SVG file
   
