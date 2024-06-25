@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="map-container">
     <LeafletMap />
     <MapOverlay v-if="showOverlay" />
     <div class="icon-container">
@@ -7,7 +7,7 @@
         src="@/assets/map-icon.svg" 
         alt="Map Icon" 
         class="map-icon" 
-        @click="toggleOverlay" 
+        @click="toggleOverlay"
         @mouseover="showTooltip" 
         @mouseleave="hideTooltip"
       />
@@ -59,7 +59,14 @@ export default {
 </script>
 
 <style scoped>
-/* Add these styles */
+.map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .icon-container {
   position: fixed;
   bottom: 20px;

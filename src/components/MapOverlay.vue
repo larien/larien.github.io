@@ -52,7 +52,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.93);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +76,7 @@ export default {
 }
 
 .highlight-text {
-  color: #1466c3; /* One of the blue tones */
+  color: #1da1eb; /* One of the blue tones */
 }
 
 /* Media queries for mobile devices */
