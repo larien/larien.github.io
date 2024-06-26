@@ -3,12 +3,12 @@
     <LeafletMap />
     <MapOverlay v-if="showOverlay" />
     <div class="icon-container">
-      <img 
-        src="@/assets/map-icon.svg" 
-        alt="Map Icon" 
-        class="map-icon" 
+      <img
+        src="@/assets/map-icon.svg"
+        alt="Map Icon"
+        class="map-icon"
         @click="toggleOverlay"
-        @mouseover="showTooltip" 
+        @mouseover="showTooltip"
         @mouseleave="hideTooltip"
       />
       <div v-if="showTooltipText" class="tooltip">Trips</div>
@@ -16,7 +16,11 @@
     <div v-if="showOverlay" class="icon-container">
       <div class="linkedin-container">
         <a href="https://www.linkedin.com/in/lariendev" target="_blank">
-          <img src="@/assets/linkedin-icon.svg" alt="LinkedIn Icon" class="linkedin-icon" />
+          <img
+            src="@/assets/linkedin-icon.svg"
+            alt="LinkedIn Icon"
+            class="linkedin-icon"
+          />
         </a>
       </div>
       <div class="blog-container">
@@ -24,37 +28,51 @@
           <img src="@/assets/blog-icon.svg" alt="Blog Icon" class="blog-icon" />
         </a>
       </div>
-  </div>
+    </div>
   </div>
 </template>
 
 <script>
-import LeafletMap from './LeafletMap.vue';
-import MapOverlay from './MapOverlay.vue';
+import LeafletMap from "./LeafletMap.vue";
+import MapOverlay from "./MapOverlay.vue";
 
 export default {
-  name: 'MapComponent',
+  name: "MapComponent",
   components: {
     LeafletMap,
-    MapOverlay
+    MapOverlay,
   },
   data() {
     return {
       showOverlay: true,
-      showTooltipText: false
+      showTooltipText: false,
     };
   },
   methods: {
     toggleOverlay() {
       this.showOverlay = !this.showOverlay;
     },
-    showTooltip() {
-      this.showTooltipText = true;
+    showTooltip(e) {
+      const layer = e.target;
+      const tooltip = layer.getTooltip();
+      if (tooltip) {
+        tooltip.getElement().onmouseover = () => {
+          layer.openTooltip();
+        };
+        tooltip.getElement().onmouseout = () => {
+          layer.closeTooltip();
+        };
+      }
     },
-    hideTooltip() {
-      this.showTooltipText = false;
-    }
-  }
+    hideTooltip(e) {
+      const layer = e.target;
+      const tooltip = layer.getTooltip();
+      if (tooltip) {
+        tooltip.getElement().onmouseover = null;
+        tooltip.getElement().onmouseout = null;
+      }
+    },
+  },
 };
 </script>
 
@@ -78,7 +96,8 @@ export default {
   width: 80px; /* Same size as the logo */
   height: auto;
   cursor: pointer;
-  transition: background-color 0.3s ease, padding 0.3s ease, border-radius 0.3s ease;
+  transition: background-color 0.3s ease, padding 0.3s ease,
+    border-radius 0.3s ease;
   padding: 10px;
   border-radius: 50%;
 }
@@ -111,7 +130,8 @@ export default {
   width: 70px; /* Adjust size as needed */
   height: auto;
   cursor: pointer;
-  transition: background-color 0.3s ease, padding 0.3s ease, border-radius 0.3s ease;
+  transition: background-color 0.3s ease, padding 0.3s ease,
+    border-radius 0.3s ease;
   padding: 10px;
   border-radius: 10%;
 }
@@ -131,7 +151,8 @@ export default {
   width: 80px; /* Adjust size as needed */
   height: auto;
   cursor: pointer;
-  transition: background-color 0.3s ease, padding 0.3s ease, border-radius 0.3s ease;
+  transition: background-color 0.3s ease, padding 0.3s ease,
+    border-radius 0.3s ease;
   padding: 10px;
   border-radius: 10%;
 }
@@ -142,7 +163,9 @@ export default {
 
 /* Media queries for mobile devices */
 @media (max-width: 768px) {
-  .map-icon, .blog-icon, .linkedin-icon {
+  .map-icon,
+  .blog-icon,
+  .linkedin-icon {
     width: 60px; /* Adjust size for mobile */
     padding: 8px;
   }

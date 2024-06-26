@@ -3,7 +3,7 @@
     <img src="@/assets/logo.svg" alt="Logo" class="logo">
     <div class="overlay-content">
       <h1 class="welcome-text">Hello!</h1>
-      <h1 class="name-text">My name is <span class="highlight-text">Lauren</span> and I'm</h1>
+      <h1 class="name-text">Call me <span class="highlight-text">Lauren</span>,</h1>
       <TypewriterComponent :sentences="sentences" />
       <h1 class="location-text">based in <span class="highlight-text">Florianópolis</span>, Brazil</h1>
     </div>
@@ -21,12 +21,15 @@ export default {
   data() {
     return {
       sentences: [
-      'a Korra fangirl',
+            'a girlboss fangirl (Vi/Korra/Aloy)',
             'an amazon in training',
             'an overexcited dev',
             'a Golang developer',
+            'an Avatar freak (not the blue one)',
+            'a mugiwara',
             'a backpacker',
             'a beach lover',
+            'a crossfit rookie',
             'a dog mom',
             'a tattoo addict'
       ]
