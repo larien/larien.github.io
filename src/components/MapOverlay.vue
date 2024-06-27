@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       sentences: [
+            'clearly not a front-end engineer',
             'a girlboss fangirl (Vi/Korra/Aloy)',
             'an amazon in training',
             'an overexcited dev',

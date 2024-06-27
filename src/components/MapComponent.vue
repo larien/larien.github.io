@@ -15,7 +15,7 @@
     </div>
     <div v-if="showOverlay" class="icon-container">
       <div class="linkedin-container">
-        <a href="https://www.linkedin.com/in/lariendev" target="_blank">
+        <a href="https://linkedin.larien.dev" target="_blank">
           <img
             src="@/assets/linkedin-icon.svg"
             alt="LinkedIn Icon"
@@ -26,6 +26,13 @@
       <div class="blog-container">
         <a href="https://blog.larien.dev" target="_blank">
           <img src="@/assets/blog-icon.svg" alt="Blog Icon" class="blog-icon" />
+        </a>
+      </div>
+    </div>
+    <div v-if="!showOverlay" class="icon-container">
+      <div class="blog-container">
+        <a href="https://instagram.larien.dev" target="_blank">
+          <img src="@/assets/instagram-icon.svg" alt="Instagram Icon" class="blog-icon" />
         </a>
       </div>
     </div>
