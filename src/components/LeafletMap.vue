@@ -143,7 +143,7 @@ export default {
       content.innerHTML = `
         <div class="tooltip-content">
           <div class="city-name">${name}</div>
-          <iframe class="tooltip-iframe" src="${url+"/embed"}" width="200" height="150" style="border:none; display: none;"></iframe>
+          <iframe class="tooltip-iframe" src="${url+"/embed"}" width="300" height="400" style="border:none; display: none;"></iframe>
         </div>
       `;
     } else {
