@@ -290,6 +290,15 @@
   },
   {
     "location": {
+      "name": "Orlando",
+      "latitude": 28.538336,
+      "longitude": -81.379234,
+      "country": "United States of America"
+    },
+    "url": ""
+  },
+  {
+    "location": {
       "name": "SOON in 2024: Porto",
       "latitude": 41.14961,
       "longitude": -8.61099,
