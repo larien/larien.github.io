@@ -269,8 +269,7 @@
       "country": "Brazil"
     },
     "url": "https://www.instagram.com/p/C83NjS8OlLm"
-  }
-  ,
+  },
   {
     "location": {
       "name": "Birmingham",
@@ -279,5 +278,104 @@
       "country": "United Kingdom"
     },
     "url": "https://www.instagram.com/p/BoUxSSVhS2m"
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Chicago",
+      "latitude": 41.881832,
+      "longitude": -87.623177,
+      "country": "United States of America"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Porto",
+      "latitude": 41.14961,
+      "longitude": -8.61099,
+      "country": "Portugal"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Lisbon",
+      "latitude": 38.736946,
+      "longitude": -9.142685,
+      "country": "Portugal"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Braga",
+      "latitude": 41.5518,
+      "longitude": -8.4229,
+      "country": "Portugal"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Paris",
+      "latitude": 48.8575,
+      "longitude": 2.349014,
+      "country": "France"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Bariloche",
+      "latitude": 41.1335,
+      "longitude": 71.3103,
+      "country": "Argentina"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Pipa",
+      "latitude": 6.2268,
+      "longitude": 35.0450,
+      "country": "Brazil"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2024: Paraty",
+      "latitude": -23.2197,
+      "longitude": -44.7167,
+      "country": "Brazil"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2025: Bangkok",
+      "latitude": 13.7563,
+      "longitude": 100.5018,
+      "country": "Thailand"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2025: Fernando de Noronha",
+      "latitude": -3.84036,
+      "longitude": -32.4113,
+      "country": "Brazil"
+    },
+    "url": ""
+  },
+  {
+    "location": {
+      "name": "SOON in 2025: Abrolhos",
+      "latitude": -18.37741,
+      "longitude": -38.68046,
+      "country": "Brazil"
+    },
+    "url": ""
   }
 ]
