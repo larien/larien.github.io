@@ -22,7 +22,7 @@ export default {
     return {
       sentences: [
             'clearly not a front-end engineer',
-            'a girlboss fangirl (Vi/Korra/Aloy)',
+            'a girlboss fangirl',
             'an amazon in training',
             'an overexcited dev',
             'a Golang developer',
