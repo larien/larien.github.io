@@ -86,7 +86,7 @@ export default {
 /* Media queries for mobile devices */
 @media (max-width: 768px) {
   .welcome-text {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .name-text, .location-text {
