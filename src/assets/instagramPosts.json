@@ -371,6 +371,15 @@
   },
   {
     "location": {
+      "name": "2025: Bali",
+      "latitude": -8.409518,
+      "longitude": 115.188919,
+      "country": "Indonesia"
+    },
+    "url": ""
+  },
+  {
+    "location": {
       "name": "2025: Abrolhos",
       "latitude": -18.37741,
       "longitude": -38.68046,
