@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import TypewriterComponent from './TypewriterComponent.vue';
+import TypewriterComponent from './Typewriter.vue';
 
 export default {
   name: 'MapOverlay',
@@ -22,7 +22,6 @@ export default {
     return {
       sentences: [
             'clearly not a front-end engineer',
-            'a girlboss fangirl',
             'an amazon in training',
             'an overexcited dev',
             'a Golang developer',

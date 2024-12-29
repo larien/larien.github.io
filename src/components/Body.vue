@@ -4,7 +4,7 @@
     <MapOverlay v-if="showOverlay" />
     <div class="icon-container">
       <img
-        src="@/assets/map-icon.svg"
+        src="@/assets/icons/map.svg"
         alt="Map Icon"
         class="map-icon"
         @click="toggleOverlay"
@@ -17,7 +17,7 @@
       <div class="linkedin-container">
         <a href="https://linkedin.larien.dev" target="_blank">
           <img
-            src="@/assets/linkedin-icon.svg"
+            src="@/assets/icons/linkedin.svg"
             alt="LinkedIn Icon"
             class="linkedin-icon"
           />
@@ -25,14 +25,14 @@
       </div>
       <div class="blog-container">
         <a href="https://blog.larien.dev" target="_blank">
-          <img src="@/assets/blog-icon.svg" alt="Blog Icon" class="blog-icon" />
+          <img src="@/assets/icons/blog.svg" alt="Blog Icon" class="blog-icon" />
         </a>
       </div>
     </div>
     <div v-if="!showOverlay" class="icon-container">
       <div class="blog-container">
         <a href="https://instagram.larien.dev" target="_blank">
-          <img src="@/assets/instagram-icon.svg" alt="Instagram Icon" class="blog-icon" />
+          <img src="@/assets/icons/instagram.svg" alt="Instagram Icon" class="blog-icon" />
         </a>
       </div>
     </div>
@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import LeafletMap from "./LeafletMap.vue";
-import MapOverlay from "./MapOverlay.vue";
+import LeafletMap from "./Leaflet.vue";
+import MapOverlay from "./Overlay.vue";
 
 export default {
   name: "MapComponent",

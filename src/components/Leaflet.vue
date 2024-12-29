@@ -5,9 +5,9 @@
 <script>
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import '@/assets/mapStyles.css';
-import instagramPosts from '@/assets/instagramPosts.json'; // Import the Instagram posts mock data
-import pinIcon from '@/assets/pin-icon.svg'; // Import the SVG file
+import '@/assets/styles.css';
+import instagramPosts from '@/assets/posts.json'; // Import the Instagram posts mock data
+import pinIcon from '@/assets/icons/pin.svg'; // Import the SVG file
 
 export default {
   name: 'LeafletMap',
