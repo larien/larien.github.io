@@ -128,7 +128,7 @@ export default {
     const customIcon = L.divIcon({
       className: 'custom-pin',
       html: emoji
-        ? `<div style="display: flex; justify-content: center; align-items: center; width: 30px; height: 30px; background-color: white; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 22px;">${emoji}</div>`
+        ? `<div style="display: flex; justify-content: center; align-items: center; width: 35px; height: 35px; background-color: white; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 20px;">${emoji}</div>`
         : `<img src="${pinIcon}" style="width:50px;height:50px; background-color:white; border-radius:50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" />`,
       iconSize: [30, 30], // Adjust icon size as needed
       iconAnchor: [20, 20], // Adjust anchor point
@@ -328,5 +328,21 @@ export default {
   margin-bottom: 10px;
   text-align: center;
   color: #333;
+}
+
+@media (max-width: 768px) {
+  .custom-pin {
+    width: 40px; /* Larger size for mobile */
+    height: 40px;
+  }
+
+  .custom-pin img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .custom-pin div {
+    font-size: 24px; /* Increase emoji size on mobile */
+  }
 }
 </style>
