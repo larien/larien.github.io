@@ -25,14 +25,22 @@
       </div>
       <div class="blog-container">
         <a href="https://blog.larien.dev" target="_blank">
-          <img src="@/assets/icons/blog.svg" alt="Blog Icon" class="blog-icon" />
+          <img
+            src="@/assets/icons/blog.svg"
+            alt="Blog Icon"
+            class="blog-icon"
+          />
         </a>
       </div>
     </div>
     <div v-if="!showOverlay" class="icon-container">
       <div class="blog-container">
         <a href="https://instagram.larien.dev" target="_blank">
-          <img src="@/assets/icons/instagram.svg" alt="Instagram Icon" class="blog-icon" />
+          <img
+            src="@/assets/icons/instagram.svg"
+            alt="Instagram Icon"
+            class="blog-icon"
+          />
         </a>
       </div>
     </div>

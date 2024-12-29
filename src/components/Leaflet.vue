@@ -121,37 +121,47 @@ export default {
       this.geojsonLayer.resetStyle(e.target);
     },
     processPosts() {
-      const customIcon = L.divIcon({
-        className: "custom-pin",
-        html: `<img src="${pinIcon}" style="width:30px;height:30px; background-color:white; border-radius:50%;" />`,
-        iconSize: [30, 30],
-        iconAnchor: [15, 30],
-        popupAnchor: [0, -30],
-      });
+  instagramPosts.forEach(post => {
+    const location = post.location;
+    const emoji = post.emoji || null; // Use the emoji if provided, otherwise default to null
 
-      instagramPosts.forEach((post) => {
-        const location = post.location;
+    const customIcon = L.divIcon({
+      className: 'custom-pin',
+      html: emoji
+        ? `<div style="display: flex; justify-content: center; align-items: center; width: 30px; height: 30px; background-color: white; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 22px;">${emoji}</div>`
+        : `<img src="${pinIcon}" style="width:50px;height:50px; background-color:white; border-radius:50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" />`,
+      iconSize: [30, 30], // Adjust icon size as needed
+      iconAnchor: [20, 20], // Adjust anchor point
+      popupAnchor: [0, 0], // Adjust popup position
+    });
 
-        // eslint-disable-next-line
-        const marker = L.marker([location.latitude, location.longitude], { 
-          icon: customIcon,
-        }).on("click", () => {
-            // Set the city name and modal content
-            this.currentCityName = location.name || "Unknown City";
-            this.modalContent = post.url
-              ? `<iframe src="${post.url}/embed" width="300" height="400" style="border:none;"></iframe>`
-              : `<p>Didn't post this one. Yet. Or not. LOL.</p>`;
-            this.showModal = true;
+    // eslint-disable-next-line
+    const marker = L.marker([location.latitude, location.longitude], { icon: customIcon })
+    .bindTooltip(location.name, {
+        permanent: false, // Tooltip only appears on hover
+        offset: [-5, -20],
+        direction: 'top',
+        className: 'custom-tooltip',
+      })  
+    .on('click', () => {
+        // Set the modal content and open it
+        this.currentCityName = location.name || 'Unknown City';
+        this.modalContent = post.url
+          ? `<iframe src="${post.url}/embed" width="300" height="400" style="border:none;"></iframe>`
+          : `<p>No additional content available for this location.</p>`;
+        this.showModal = true;
 
-            // Zoom into the location
-            this.map.flyTo([location.latitude, location.longitude], 6, {
-              animate: true,
-              duration: 1.5, // Animation duration in seconds
-            });
-          })
-          .addTo(this.map);
-      });
-    },
+        // Zoom into the location
+        this.map.flyTo([location.latitude, location.longitude], 8, {
+          animate: true,
+          duration: 1.5,
+        });
+      })
+      .addTo(this.map);
+  });
+
+  console.log('Markers added:', this.markers);
+},
     createTooltipContent(name, url) {
       const content = document.createElement("div");
       if (url) {
@@ -201,11 +211,14 @@ export default {
       this.showModal = false;
       this.modalContent = null;
 
-       // Zoom out slightly more than the last zoom level
-  const currentZoom = this.map.getZoom(); // Get the current zoom level
-  const targetZoom = Math.max(currentZoom - 2, 3); // Ensure it doesn't zoom out below level 3
-  this.map.flyTo(this.map.getCenter(), targetZoom, { animate: true, duration: 0.7 });
-      },
+      // Zoom out slightly more than the last zoom level
+      const currentZoom = this.map.getZoom(); // Get the current zoom level
+      const targetZoom = Math.max(currentZoom - 3, 3);
+      this.map.flyTo(this.map.getCenter(), targetZoom, {
+        animate: true,
+        duration: 0.7,
+      });
+    },
   },
 };
 </script>
