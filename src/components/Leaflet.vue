@@ -48,7 +48,7 @@ export default {
         "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.{ext}",
         {
           attribution:
-            'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under ODbL.',
+            '',
           subdomains: "abcd",
           minZoom: 0,
           maxZoom: 20,
@@ -128,7 +128,7 @@ export default {
     const customIcon = L.divIcon({
       className: 'custom-pin',
       html: emoji
-        ? `<div style="display: flex; justify-content: center; align-items: center; width: 35px; height: 35px; background-color: white; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 20px;">${emoji}</div>`
+        ? `<div style="display: flex; justify-content: center; align-items: center; width: 35px; height: 35px; background-color: white; border-radius: 50%; box-shadow: 3px 5px 4px rgba(0,0,0,0.2); border: 1px solid black; font-size: 20px;">${emoji}</div>`
         : `<img src="${pinIcon}" style="width:50px;height:50px; background-color:white; border-radius:50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" />`,
       iconSize: [30, 30], // Adjust icon size as needed
       iconAnchor: [20, 20], // Adjust anchor point

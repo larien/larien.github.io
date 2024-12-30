@@ -22,16 +22,16 @@ export default {
     return {
       sentences: [
             'clearly not a front-end engineer',
-            'an amazon in training',
+            'an amazon in the making',
             'an overexcited dev',
             'a Golang developer',
-            'an Avatar freak (not the blue one)',
-            'a mugiwara',
-            'a backpacker',
-            'a beach lover',
-            'a crossfit rookie',
-            'a dog mom',
-            'a tattoo addict'
+            'a waterbender at heart',
+            'a Straw Hat pirate wannabe',
+            'a backpacker with a wifi addiction',
+            'a summer chaser',
+            'a crossfit survivor breaking multiple kinds of PRs',
+            'the second favorite human of my dogs (besides their grandma)',
+            'a tattoo collector with no empty canvas'
       ]
     };
   }
