@@ -2,14 +2,19 @@
   <div>
     <div id="map" ref="map"></div>
 
-    <!-- Modal -->
     <div v-if="showModal" class="modal" @click="closeModalOnOutsideClick">
       <div class="modal-content" @click.stop>
-        <!-- Title/Header -->
-        <h2 class="modal-title">{{ currentCityName }}</h2>
+        <h2 class="modal-title">
+          <a
+            v-if="currentCityName === 'Florianópolis'"
+            :href=itinerary
+            target="_blank"
+            title="Where is Lauren?"
+            >✈️</a
+          >
+          {{ currentCityName }}
+        </h2>
         <button class="close-button" @click="closeModal">X</button>
-
-        <!-- Modal Content -->
         <div v-html="modalContent"></div>
       </div>
     </div>
@@ -33,11 +38,19 @@ export default {
       visitedCountriesSet: new Set(),
       showModal: false,
       modalContent: null,
+      currentCityName: null,
+      konamiCode: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65], // Key codes for ↑↑↓↓←→←→BA
+      konamiIndex: 0, // Track the user's progress in the code
+      itinerary: "https://trips.larien.dev"
     };
   },
   mounted() {
     this.initMap();
+    window.addEventListener("keydown", this.handleKonamiCode);
   },
+  beforeDestroy() {
+  window.removeEventListener("keydown", this.handleKonamiCode);
+},
   methods: {
     initMap() {
       this.map = L.map(this.$refs.map, {
@@ -47,8 +60,7 @@ export default {
       L.tileLayer(
         "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}.{ext}",
         {
-          attribution:
-            '',
+          attribution: "",
           subdomains: "abcd",
           minZoom: 0,
           maxZoom: 20,
@@ -69,6 +81,24 @@ export default {
 
       this.processPosts();
     },
+    handleKonamiCode(event) {
+    if (event.keyCode === this.konamiCode[this.konamiIndex]) {
+      // Correct key in sequence
+      this.konamiIndex++;
+      if (this.konamiIndex === this.konamiCode.length) {
+        // Full sequence matched
+        this.triggerKonamiAction();
+        this.konamiIndex = 0; // Reset for future attempts
+      }
+    } else {
+      // Wrong key, reset the sequence
+      this.konamiIndex = 0;
+    }
+  },
+  triggerKonamiAction() {
+    alert("You unlocked the secret itinerary! Nice job!");
+    window.open(this.itinerary, "_blank")
+  },
     getRandomBlue() {
       const blueTones = ["#014ba0", "#0a5cb8", "#1466c3", "#2174d4", "#3b8eed"];
       return blueTones[Math.floor(Math.random() * blueTones.length)];
@@ -121,47 +151,49 @@ export default {
       this.geojsonLayer.resetStyle(e.target);
     },
     processPosts() {
-  instagramPosts.forEach(post => {
-    const location = post.location;
-    const emoji = post.emoji || null; // Use the emoji if provided, otherwise default to null
+      instagramPosts.forEach((post) => {
+        const location = post.location;
+        const emoji = post.emoji || null; // Use the emoji if provided, otherwise default to null
 
-    const customIcon = L.divIcon({
-      className: 'custom-pin',
-      html: emoji
-        ? `<div style="display: flex; justify-content: center; align-items: center; width: 35px; height: 35px; background-color: white; border-radius: 50%; box-shadow: 3px 5px 4px rgba(0,0,0,0.2); border: 1px solid black; font-size: 20px;">${emoji}</div>`
-        : `<img src="${pinIcon}" style="width:50px;height:50px; background-color:white; border-radius:50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" />`,
-      iconSize: [30, 30], // Adjust icon size as needed
-      iconAnchor: [20, 20], // Adjust anchor point
-      popupAnchor: [0, 0], // Adjust popup position
-    });
-
-    // eslint-disable-next-line
-    const marker = L.marker([location.latitude, location.longitude], { icon: customIcon })
-    .bindTooltip(location.name, {
-        permanent: false, // Tooltip only appears on hover
-        offset: [-5, -20],
-        direction: 'top',
-        className: 'custom-tooltip',
-      })  
-    .on('click', () => {
-        // Set the modal content and open it
-        this.currentCityName = location.name || 'Unknown City';
-        this.modalContent = post.url
-          ? `<iframe src="${post.url}/embed" width="300" height="400" style="border:none;"></iframe>`
-          : `<p>No additional content available for this location.</p>`;
-        this.showModal = true;
-
-        // Zoom into the location
-        this.map.flyTo([location.latitude, location.longitude], 8, {
-          animate: true,
-          duration: 1.5,
+        const customIcon = L.divIcon({
+          className: "custom-pin",
+          html: emoji
+            ? `<div style="display: flex; justify-content: center; align-items: center; width: 35px; height: 35px; background-color: white; border-radius: 50%; box-shadow: 3px 5px 4px rgba(0,0,0,0.2); border: 1px solid black; font-size: 20px;">${emoji}</div>`
+            : `<img src="${pinIcon}" style="width:50px;height:50px; background-color:white; border-radius:50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2);" />`,
+          iconSize: [30, 30], // Adjust icon size as needed
+          iconAnchor: [20, 20], // Adjust anchor point
+          popupAnchor: [0, 0], // Adjust popup position
         });
-      })
-      .addTo(this.map);
-  });
 
-  console.log('Markers added:', this.markers);
-},
+        // eslint-disable-next-line
+        const marker = L.marker([location.latitude, location.longitude], {
+          icon: customIcon,
+        })
+          .bindTooltip(location.name, {
+            permanent: false, // Tooltip only appears on hover
+            offset: [-5, -20],
+            direction: "top",
+            className: "custom-tooltip",
+          })
+          .on("click", () => {
+            // Set the modal content and open it
+            this.currentCityName = location.name || "Unknown City";
+            this.modalContent = post.url
+              ? `<iframe src="${post.url}/embed" width="300" height="400" style="border:none;"></iframe>`
+              : `<p>No additional content available for this location.</p>`;
+            this.showModal = true;
+
+            // Zoom into the location
+            this.map.flyTo([location.latitude, location.longitude], 8, {
+              animate: true,
+              duration: 1.5,
+            });
+          })
+          .addTo(this.map);
+      });
+
+      console.log("Markers added:", this.markers);
+    },
     createTooltipContent(name, url) {
       const content = document.createElement("div");
       if (url) {
