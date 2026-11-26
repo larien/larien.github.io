@@ -47,6 +47,7 @@ export default {
     } catch (e) {
       this.live = false;
     }
+    this.$emit("status", this.live);
   },
 };
 </script>
