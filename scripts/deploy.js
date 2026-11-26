@@ -48,17 +48,13 @@ try {
   });
   success("Build completed successfully");
 
-  // Step 3: Copy CNAME file
-  step("Setting up custom domain...");
-  const cnameSource = path.join(__dirname, "../../CNAME");
+  // Step 3: CNAME ships from public/CNAME via the build
+  step("Checking custom domain...");
   const cnameTarget = path.join(__dirname, "../dist/CNAME");
-
-  if (fs.existsSync(cnameSource)) {
-    fs.copyFileSync(cnameSource, cnameTarget);
-    const domain = fs.readFileSync(cnameSource, "utf8").trim();
-    success(`CNAME file copied - Custom domain: ${domain}`);
+  if (fs.existsSync(cnameTarget)) {
+    success(`CNAME present - Custom domain: ${fs.readFileSync(cnameTarget, "utf8").trim()}`);
   } else {
-    warning("No CNAME file found - using default GitHub Pages domain");
+    warning("dist/CNAME missing - the custom domain would be dropped");
   }
 
   // Step 4: Create .nojekyll file (for GitHub Pages compatibility)
@@ -75,8 +71,8 @@ try {
   // Final success message
   log("\n🎉 Deployment completed successfully!", colors.green + colors.bright);
 
-  const domain = fs.existsSync(cnameSource)
-    ? fs.readFileSync(cnameSource, "utf8").trim()
+  const domain = fs.existsSync(cnameTarget)
+    ? fs.readFileSync(cnameTarget, "utf8").trim()
     : "your-username.github.io/your-repo";
 
   log(`\n🌐 Your app will be available at: https://${domain}`);
