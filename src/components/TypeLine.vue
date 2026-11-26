@@ -4,7 +4,13 @@
          announces each whole phrase once instead of every keystroke. The
          link is mouse-only (tabindex -1) because the same destinations are
          reachable as the project cards right below. -->
-    <span aria-hidden="true"
+    <!-- Every phrase, invisible, stacked in the same grid cell: the cell is
+         always as tall as the longest phrase at the current width/language,
+         so the panel never resizes while typing. -->
+    <span v-for="(s, k) in phrases" :key="k" class="cell ghost" aria-hidden="true"
+      >{{ s.pre }}<span :class="{ lk: s.link }">{{ s.link }}</span>{{ s.post }}<span class="caret"></span
+    ></span>
+    <span class="cell" aria-hidden="true"
       >{{ shown.pre
       }}<a v-if="shown.lk" :href="phrase.href" tabindex="-1" class="lk">{{ shown.lk }}</a
       >{{ shown.post }}<span class="caret"></span
@@ -101,7 +107,15 @@ export default {
 
 <style scoped>
 .typed {
-  min-height: 1.4em;
+  display: grid;
+}
+.cell {
+  grid-area: 1 / 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.ghost {
+  visibility: hidden;
 }
 .lk {
   border-bottom: 2px solid var(--accent);
@@ -126,17 +140,6 @@ export default {
 @media (prefers-reduced-motion: reduce) {
   .caret {
     animation: none;
-  }
-}
-@media (max-width: 720px) {
-  .typed {
-    min-height: 2.7em;
-  }
-}
-/* Narrow phones: the longest phrases need a third line. */
-@media (max-width: 480px) {
-  .typed {
-    min-height: 4.05em;
   }
 }
 </style>
