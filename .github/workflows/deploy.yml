@@ -1,98 +1,63 @@
-name: 🚀 Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
+# Pages serves the gh-pages branch (Settings → Pages → "Deploy from a branch").
+# Pushes to main build and publish; pull requests only build, as a check.
 on:
   push:
-    branches: [main, master]
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # push to gh-pages
 
     steps:
-      - name: 📦 Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: 🔧 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
-          cache: "npm"
-          cache-dependency-path: "map/package-lock.json"
+          node-version: "20"
+          cache: npm
 
-      - name: 📥 Install dependencies
-        working-directory: ./map
+      - name: Install dependencies
         run: npm ci
 
-      - name: 🧹 Clean previous builds
-        working-directory: ./map
-        run: npm run clean
-
-      - name: 🏗️ Build Vue.js application
-        working-directory: ./map
+      - name: Build
         run: npm run build
         env:
           NODE_ENV: production
 
-      - name: 📋 Copy CNAME for custom domain
-        working-directory: ./map
+      - name: Prepare Pages output
         run: |
-          if [ -f "../CNAME" ]; then
-            cp ../CNAME dist/CNAME
-            echo "✅ CNAME file copied for custom domain"
-          else
-            echo "⚠️ No CNAME file found - using default GitHub Pages domain"
-          fi
-
-      - name: 🚫 Create .nojekyll file
-        working-directory: ./map
-        run: |
+          # Keep the custom domain even if the build didn't ship a CNAME.
+          [ -f dist/CNAME ] || echo "larien.dev" > dist/CNAME
           touch dist/.nojekyll
-          echo "✅ .nojekyll file created"
+          test -f dist/index.html
+          echo "CNAME: $(cat dist/CNAME)"
 
-      - name: 📤 Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to gh-pages
+        if: github.event_name != 'pull_request'
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./map/dist
+          publish_dir: ./dist
           publish_branch: gh-pages
           force_orphan: true
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_message: |
-            🚀 Deploy: ${{ github.event.head_commit.message }}
+          commit_message: "Deploy ${{ github.sha }}"
 
-            Deployed from commit: ${{ github.sha }}
-            Repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
-
-      - name: 🎉 Deployment Summary
+      - name: Summary
+        if: github.event_name != 'pull_request'
         run: |
-          echo "## 🎉 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Your Vue.js Travel Map has been deployed to GitHub Pages!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 🌐 Live URLs:" >> $GITHUB_STEP_SUMMARY
-          if [ -f "CNAME" ]; then
-            DOMAIN=$(cat CNAME)
-            echo "- **Custom Domain**: https://$DOMAIN" >> $GITHUB_STEP_SUMMARY
-          fi
-          echo "- **GitHub Pages**: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📊 Build Details:" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "⏰ Note: It may take a few minutes for changes to be visible on the live site."
+          echo "Deployed ${{ github.sha }} to gh-pages → https://$(cat dist/CNAME)" >> "$GITHUB_STEP_SUMMARY"
