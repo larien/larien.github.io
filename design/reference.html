@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>larien.dev — Prompt</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.root.dark{--glass:rgba(10,14,20,0.8);--veil:rgba(10,14,20,0.55);--bg:#0A0E14;--panel:#0D121A;--card:#0F1A26;--fg:#F0F3F6;--text:#C9D1D9;--muted:#8B96A5;--dim:#6E7A8A;--line:#1B2230;--border:#263042;--accent:#1DA1EB;--accentHover:#7CCBF5;--grid:#2A3444}
+.root.light{--glass:rgba(255,255,255,0.86);--veil:rgba(246,248,250,0.5);--bg:#F6F8FA;--panel:#FFFFFF;--card:#EAF4FB;--fg:#11161D;--text:#2B323B;--muted:#57606A;--dim:#636C76;--line:#D8DEE4;--border:#C9D1D9;--accent:#0B6FB5;--accentHover:#08528A;--grid:#D0D7DE}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--accentHover);text-decoration:underline}
+@keyframes blink{50%{opacity:0}}
+.caret{display:inline-block;width:0.55em;height:1.1em;background:var(--accent);vertical-align:-0.18em;margin-left:2px;animation:blink 1s steps(1) infinite}
+.root.dark.acc-indigo{--accent:#7B93FF;--accentHover:#AFBEFF}.root.light.acc-indigo{--accent:#3A56D5;--accentHover:#2B41A8}
+.root.dark.acc-teal{--accent:#2DD4BF;--accentHover:#8BEADF}.root.light.acc-teal{--accent:#0F766E;--accentHover:#0B5A54}
+.root.dark.acc-coral{--accent:#FF7A6B;--accentHover:#FFB0A6}.root.light.acc-coral{--accent:#C2410C;--accentHover:#9A3412}
+.root.dark.acc-violet{--accent:#B794F6;--accentHover:#D6C2FA}.root.light.acc-violet{--accent:#7C3AED;--accentHover:#5B21B6}
+.root.dark.acc-amber{--accent:#F5B83D;--accentHover:#F9D488}.root.light.acc-amber{--accent:#A15C07;--accentHover:#7A4505}
+.sw-blue{--sw:#0B6FB5}.sw-indigo{--sw:#3A56D5}.sw-teal{--sw:#0F766E}.sw-coral{--sw:#C2410C}.sw-violet{--sw:#7C3AED}.sw-amber{--sw:#A15C07}
+.root.dark .sw-blue{--sw:#1DA1EB}.root.dark .sw-indigo{--sw:#7B93FF}.root.dark .sw-teal{--sw:#2DD4BF}.root.dark .sw-coral{--sw:#FF7A6B}.root.dark .sw-violet{--sw:#B794F6}.root.dark .sw-amber{--sw:#F5B83D}
+.sw{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:50%;cursor:pointer;padding:0}
+.sw .dot{width:22px;height:22px;border-radius:50%;background:var(--sw);box-shadow:0 0 0 2px var(--glass)}
+.sw.on .dot{box-shadow:0 0 0 2px var(--glass),0 0 0 4px var(--fg)}
+.sw:hover .dot{transform:scale(1.12)}
+.map-narrow{display:none}
+.typed{min-height:1.4em}
+@media (max-width:720px){.typed{min-height:2.7em}}
+@media (max-width:720px){.map-wide{display:none}.map-narrow{display:block}.navlinks{display:none !important}.langgrp{border-left:0 !important;padding-left:0 !important}.hdr-ctl{gap:4px !important}}
+.glass{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);pointer-events:auto}
+@keyframes pulse{0%{r:1.2;opacity:.9}100%{r:8;opacity:0}}
+.ring{animation:pulse 2.4s ease-out infinite}
+.pin{fill:var(--accent)}.gdot{fill:var(--grid)}.home{stroke:var(--accent)}
+.ctl{font:500 13px 'JetBrains Mono',monospace;min-height:44px;min-width:44px;padding:0 10px;background:transparent;border:1px solid transparent;border-radius:8px;color:var(--muted);cursor:pointer}
+.ctl:hover{color:var(--fg);border-color:var(--border)}
+.ctl.on{color:var(--fg);border-color:var(--accent)}
+</style>
+</helmet>
+<div class="root {{theme}} acc-{{acc}}" style="position: relative; min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; overflow: hidden; transition: background 0.25s, color 0.25s">
+  <div role="img" aria-label="Map of places Lauren has been, from share.nomu.land/maps/larien" style="position: absolute; inset: 0">
+    <svg class="map-narrow" viewBox="92 0 80 140" preserveAspectRatio="xMidYMid slice" style="width: 100%; height: 100%" aria-hidden="true">
+      <defs><pattern id="pmDotsN" width="2.5" height="2.5" patternUnits="userSpaceOnUse"><circle class="gdot" cx="1.25" cy="1.25" r="0.25"></circle></pattern></defs>
+      <rect width="360" height="140" fill="url(#pmDotsN)"></rect>
+      <sc-for list="{{pins}}" as="p" hint-placeholder-count="30"><circle class="pin" cx="{{p.x}}" cy="{{p.y}}" r="0.8"></circle></sc-for>
+      <circle class="home ring" cx="131.45" cy="102.6" r="1.2" fill="none" stroke-width="0.3"></circle>
+      <circle class="pin" cx="131.45" cy="102.6" r="1.1"></circle>
+    </svg>
+    <svg class="map-wide" viewBox="0 0 360 140" preserveAspectRatio="xMidYMid slice" style="width: 100%; height: 100%; display: block" aria-hidden="true">
+      <defs><pattern id="pmDots" width="2.5" height="2.5" patternUnits="userSpaceOnUse"><circle class="gdot" cx="1.25" cy="1.25" r="0.25"></circle></pattern></defs>
+      <rect width="360" height="140" fill="url(#pmDots)"></rect>
+      <sc-for list="{{pins}}" as="p" hint-placeholder-count="30"><circle class="pin" cx="{{p.x}}" cy="{{p.y}}" r="1"></circle></sc-for>
+      <circle class="home ring" cx="131.45" cy="102.6" r="1.2" fill="none" stroke-width="0.4"></circle>
+      <circle class="pin" cx="131.45" cy="102.6" r="1.3"></circle>
+    </svg>
+  </div>
+  <div style="position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, var(--veil) 0%, transparent 55%)"></div>
+  <div style="position: relative; min-height: 100vh; display: flex; flex-direction: column; pointer-events: none">
+  <header class="glass" style="position: relative; z-index: 10; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 12px clamp(20px, 5vw, 72px); border-width: 0 0 1px 0">
+    <a href="https://larien.dev" aria-label="larien.dev — home" style="display: inline-flex; align-items: center; min-height: 44px; color: var(--accent)"><svg width="36" height="36" viewBox="0 0 962 962" fill="currentColor" aria-hidden="true"><rect width="173.48" height="962"></rect><rect y="785.02" width="962" height="176.98"></rect><rect x="262.84" width="699.16" height="173.48"></rect><rect x="788.52" width="173.48" height="700.91"></rect><rect x="262.84" y="261.09" width="697.16" height="175.23"></rect><rect x="262.84" y="523.93" width="697.16" height="176.98"></rect></svg></a>
+    <div class="hdr-ctl" style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 20px; margin-left: auto">
+      <nav class="navlinks" style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px">
+        <a href="https://nomu.land">./nomu</a>
+        <a href="https://blog.larien.dev">./blog</a>
+        <a href="https://linkedin.larien.dev">./linkedin</a>
+      </nav>
+      <div class="langgrp" style="display: flex; align-items: center; gap: 2px; padding-left: 16px; border-left: 1px solid var(--line)" role="group" aria-label="Language">
+        <sc-for list="{{langs}}" as="l" hint-placeholder-count="3"><button type="button" class="ctl {{l.k}}" aria-pressed="{{l.on}}" onClick="{{l.pick}}">{{l.label}}</button></sc-for>
+      </div>
+      <div style="position: relative">
+        <button type="button" class="ctl" aria-label="{{t.acc}}" aria-expanded="{{pickerOn}}" onClick="{{togglePicker}}" style="display: inline-flex; align-items: center; justify-content: center">
+          <span style="width: 16px; height: 16px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--glass), 0 0 0 3px var(--border)"></span>
+        </button>
+        <sc-if value="{{pickerOpen}}" hint-placeholder-val="{{ false }}">
+          <div class="glass" role="group" aria-label="{{t.acc}}" style="position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; width: max-content; background: var(--panel); display: flex; flex-direction: column; gap: 6px; padding: 10px; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18)">
+            <span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; color: var(--muted); padding: 0 6px">{{t.acc}}</span>
+            <div style="display: grid; grid-template-columns: repeat(3, 44px); gap: 4px">
+              <sc-for list="{{swatches}}" as="s" hint-placeholder-count="6"><button type="button" class="sw sw-{{s.key}} {{s.k}}" aria-label="{{s.name}}" aria-pressed="{{s.on}}" title="{{s.name}}" onClick="{{s.pick}}"><span class="dot"></span></button></sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <button type="button" class="ctl" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}" style="display: inline-flex; align-items: center; justify-content: center">
+        <sc-if value="{{isDark}}" hint-placeholder-val="{{ true }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+        <sc-if value="{{isLight}}" hint-placeholder-val="{{ false }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></sc-if>
+      </button>
+    </div>
+  </header>
+  <main style="flex: 1; display: flex; align-items: center; padding: clamp(24px, 5vw, 48px) clamp(16px, 5vw, 72px); max-width: 1440px; box-sizing: border-box; width: 100%; margin: 0 auto">
+    <sc-if value="{{showPanel}}" hint-placeholder-val="{{ true }}">
+    <section class="glass" style="flex: 0 1 720px; min-width: 0; display: flex; flex-direction: column; gap: 20px; padding: clamp(24px, 3vw, 40px); border-radius: 18px; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6">
+      <div><span style="color: var(--dim)">~/larien.dev $</span> whoami</div>
+      <div style="font-size: clamp(34px, 4vw, 56px); line-height: 1.15; color: var(--fg); font-weight: 700; letter-spacing: -0.02em">{{t.hello}}<span style="color: var(--accent)">Lauren</span>,</div>
+      <div class="typed" style="font-size: clamp(22px, 2.4vw, 32px); line-height: 1.35; color: var(--fg)">{{pre}}<sc-if value="{{hasLk}}" hint-placeholder-val="{{ true }}"><a href="{{href}}" style="border-bottom: 2px solid var(--accent)">{{lk}}</a></sc-if>{{post}}<span class="caret"></span></div>
+      <div style="color: var(--muted)">{{t.based}}</div>
+      <div style="margin-top: 24px"><span style="color: var(--dim)">~/larien.dev $</span> ls projects/</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px">
+        <a href="https://nomu.land" style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border: 1px solid var(--accent); border-radius: 10px; background: var(--card)">
+          <span style="font-weight: 700; color: var(--fg)">nomu.land/</span>
+          <span style="font-size: 13px; color: var(--muted); line-height: 1.5">{{t.nomu}}</span>
+          <span style="margin-top: auto; font-size: 12px; color: var(--accent)">iOS + Android →</span>
+        </a>
+        <a href="https://blog.larien.dev" style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border: 1px solid var(--border); border-radius: 10px">
+          <span style="font-weight: 700; color: var(--fg)">blog/</span>
+          <span style="font-size: 13px; color: var(--muted); line-height: 1.5">{{t.blog}}</span>
+          <span style="margin-top: auto; font-size: 12px; color: var(--accent)">{{t.blogCta}}</span>
+        </a>
+        <a href="https://linkedin.larien.dev" style="display: flex; flex-direction: column; gap: 6px; padding: 18px; border: 1px solid var(--border); border-radius: 10px">
+          <span style="font-weight: 700; color: var(--fg)">linkedin/</span>
+          <span style="font-size: 13px; color: var(--muted); line-height: 1.5">{{t.li}}</span>
+          <span style="margin-top: auto; font-size: 12px; color: var(--accent)">{{t.liCta}}</span>
+        </a>
+      </div>
+    </section>
+    </sc-if>
+  </main>
+  <footer style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; padding: 20px clamp(20px, 5vw, 72px)">
+    <button type="button" class="ctl glass" aria-pressed="{{exploreOn}}" onClick="{{toggleExplore}}" style="display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; color: var(--fg)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"></path><path d="M9 4v14M15 6v14"></path></svg>{{exploreLabel}}
+    </button>
+    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px">
+      <a class="glass" href="https://share.nomu.land/maps/larien" style="padding: 8px 12px; border-radius: 8px; font-size: 12px">{{t.mapA}} Nomu · {{count}} pins ↗</a>
+      <div class="glass" style="display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 8px 12px; border-radius: 8px; font-size: 12px; color: var(--dim)">
+        <span>© 2026 Lauren Ferreira · @larienmf</span>
+        <span style="letter-spacing: 0.08em">LARIEN DEV LTDA</span>
+      </div>
+    </div>
+  </footer>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"defaultAccent":{"editor":"enum","options":["blue","indigo","teal","coral","violet","amber"],"default":"blue"},"defaultTheme":{"editor":"enum","options":["auto","dark","light"],"default":"auto"},"defaultLang":{"editor":"enum","options":["auto","en","pt","es"],"default":"auto"},"$preview":{"width":1440,"height":900}}'>
+const LI="https://linkedin.larien.dev", NOMU="https://nomu.land", BLOG="https://blog.larien.dev";
+const T={
+en:{hello:"Hello! Call me ",based:"based in Florianópolis, Brazil",nomu:"Travel app · plan, document & share trips",blog:"Notes on code and the road",blogCta:"read →",li:"Work history & contact",liCta:"connect →",mapA:"Every pin is a trip logged in",mapB:"Home: Florianópolis.",ex:"explore the map",back:"back to intro",acc:"Accent color",cn:{blue:"Larien blue",indigo:"Nomu indigo",teal:"Teal",coral:"Coral",violet:"Violet",amber:"Amber"},
+ S:[{pre:"a ",link:"Golang developer",post:"",href:LI},{pre:"building ",link:"Nomu.land",post:", a travel app",href:NOMU},{pre:"a ",link:"backpacker",post:" with a wifi addiction",href:NOMU},{pre:"writing on ",link:"the blog",post:" now and then",href:BLOG},{pre:"a waterbender at heart",link:"",post:"",href:""},{pre:"a summer chaser",link:"",post:"",href:""},{pre:"clearly not a front-end engineer",link:"",post:"",href:""},{pre:"an amazon in the making",link:"",post:"",href:""},{pre:"an overexcited dev",link:"",post:"",href:""},{pre:"a Straw Hat pirate wannabe",link:"",post:"",href:""},{pre:"a crossfit survivor breaking multiple kinds of PRs",link:"",post:"",href:""},{pre:"the second favorite human of my dogs (besides their grandma)",link:"",post:"",href:""},{pre:"a tattoo collector with no empty canvas",link:"",post:"",href:""}]},
+pt:{hello:"Oi! Pode me chamar de ",based:"de Florianópolis, Brasil",nomu:"App de viagem · planeje, registre e compartilhe",blog:"Notas sobre código e estrada",blogCta:"ler →",li:"Carreira e contato",liCta:"conectar →",mapA:"Cada pin é uma viagem registrada no",mapB:"Casa: Florianópolis.",ex:"explorar o mapa",back:"voltar",acc:"Cor de destaque",cn:{blue:"Azul Larien",indigo:"Índigo Nomu",teal:"Verde-azulado",coral:"Coral",violet:"Violeta",amber:"Âmbar"},
+ S:[{pre:"uma ",link:"dev Golang",post:"",href:LI},{pre:"construindo o ",link:"Nomu.land",post:", um app de viagem",href:NOMU},{pre:"uma ",link:"mochileira",post:" viciada em wifi",href:NOMU},{pre:"escrevendo no ",link:"blog",post:" de vez em quando",href:BLOG},{pre:"uma dobradora de água de coração",link:"",post:"",href:""},{pre:"sempre atrás do verão",link:"",post:"",href:""},{pre:"uma dev que claramente não é front-end",link:"",post:"",href:""},{pre:"uma amazona em formação",link:"",post:"",href:""},{pre:"uma dev empolgada demais",link:"",post:"",href:""},{pre:"aspirante a pirata do Chapéu de Palha",link:"",post:"",href:""},{pre:"sobrevivente do crossfit quebrando vários tipos de PR",link:"",post:"",href:""},{pre:"a segunda humana favorita dos meus cachorros (depois da avó deles)",link:"",post:"",href:""},{pre:"colecionadora de tatuagens sem tela em branco",link:"",post:"",href:""}]},
+es:{hello:"¡Hola! Llámame ",based:"desde Florianópolis, Brasil",nomu:"App de viajes · planifica, documenta y comparte",blog:"Notas sobre código y carretera",blogCta:"leer →",li:"Trayectoria y contacto",liCta:"conectar →",mapA:"Cada pin es un viaje registrado en",mapB:"Casa: Florianópolis.",ex:"explorar el mapa",back:"volver",acc:"Color de acento",cn:{blue:"Azul Larien",indigo:"Índigo Nomu",teal:"Verde azulado",coral:"Coral",violet:"Violeta",amber:"Ámbar"},
+ S:[{pre:"una ",link:"desarrolladora Golang",post:"",href:LI},{pre:"creando ",link:"Nomu.land",post:", una app de viajes",href:NOMU},{pre:"una ",link:"mochilera",post:" adicta al wifi",href:NOMU},{pre:"escribiendo en ",link:"el blog",post:" de vez en cuando",href:BLOG},{pre:"maestra agua de corazón",link:"",post:"",href:""},{pre:"siempre persiguiendo el verano",link:"",post:"",href:""},{pre:"una dev que claramente no es front-end",link:"",post:"",href:""},{pre:"una amazona en construcción",link:"",post:"",href:""},{pre:"una dev demasiado entusiasmada",link:"",post:"",href:""},{pre:"aspirante a pirata del Sombrero de Paja",link:"",post:"",href:""},{pre:"superviviente del crossfit batiendo varios tipos de PR",link:"",post:"",href:""},{pre:"la segunda humana favorita de mis perros (después de su abuela)",link:"",post:"",href:""},{pre:"coleccionista de tatuajes sin lienzo en blanco",link:"",post:"",href:""}]}
+};
+const LANGS=[["en","EN"],["pt","BR"],["es","ES"]];
+const P=[[35.01,135.77],[35.68,139.65],[-37.81,144.96],[-45.03,168.66],[-12.97,-38.5],[-9.01,-35.22],[-27.6,-48.55],[-22.91,-43.17],[-23.55,-46.63],[-22.75,-41.88],[-19.92,-43.94],[37.98,23.73],[35.24,24.81],[12.58,-81.7],[6.24,-75.58],[4.71,-74.07],[3.45,-76.53],[-33.45,-70.67],[-34.6,-58.38],[-32.89,-68.85],[40.71,-74.01],[34.05,-118.24],[52.41,-1.52],[51.51,-0.13],[41.39,2.17],[52.52,13.41],[45.46,9.19],[-23.95,-46.34],[36.19,-115.18],[-28.03,-49.61],[52.49,-1.9],[41.88,-87.62],[28.54,-81.38],[41.15,-8.61]];
+class Component extends DCLogic {
+  componentDidMount(){
+    let lang="en", theme="dark";
+    try { const nl=(navigator.language||"en").toLowerCase(); if(nl.startsWith("pt")) lang="pt"; else if(nl.startsWith("es")) lang="es"; } catch(e){}
+    try { if(window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) theme="light"; } catch(e){}
+    this.setState({i:0,n:0,d:false,h:0,autoLang:lang,autoTheme:theme});
+    this.t=setInterval(()=>this.tick(),65);
+  }
+  componentWillUnmount(){ clearInterval(this.t); }
+  lang(){ const st=this.state||{}; const p=this.props.defaultLang??"auto"; return st.lang||(p==="auto"?(st.autoLang||"en"):p); }
+  theme(){ const st=this.state||{}; const p=this.props.defaultTheme??"auto"; return st.theme||(p==="auto"?(st.autoTheme||"dark"):p); }
+  tick(){ const st=this.state||{}; const S=T[this.lang()].S; const i=(st.i||0)%S.length,n=st.n||0,h=st.h||0,d=!!st.d; const s=S[i]; const L=(s.pre+s.link+s.post).length;
+    if(h>0) return this.setState({h:h-1});
+    if(!d){ if(n<L) this.setState({n:n+1}); else this.setState({d:true,h:30}); }
+    else { if(n>0) this.setState({n:n-1}); else this.setState({d:false,i:(i+1)%S.length,h:6}); } }
+  renderVals(){ const st=this.state||{}; const lg=this.lang(), th=this.theme(); const t=T[lg]; const s=t.S[(st.i||0)%t.S.length]; const f=s.pre+s.link+s.post; const n=st.n==null?f.length:st.n; const a=s.pre.length,b=a+s.link.length;
+    return { t:t, theme:th, isDark:th==="dark", isLight:th==="light",
+      themeLabel: th==="dark" ? "Switch to light mode" : "Switch to dark mode",
+      toggleTheme: ()=>this.setState({theme: th==="dark"?"light":"dark"}),
+      langs: LANGS.map(([k,label])=>({label:label,k:k===lg?"on":"",on:k===lg?"true":"false",pick:()=>this.setState({lang:k,i:0,n:0,d:false,h:0})})),
+      pre:f.slice(0,Math.min(n,a)), lk:n>a?f.slice(a,Math.min(n,b)):"", post:n>b?f.slice(b,n):"", href:s.href, hasLk:n>a&&s.link.length>0,
+      pins:P.map(p=>({x:p[1]+180,y:75-p[0]})), count:P.length,
+      acc: st.acc||(this.props.defaultAccent??"blue"), pickerOpen:!!st.picker, pickerOn:st.picker?"true":"false", togglePicker:()=>this.setState({picker:!st.picker}),
+      swatches:["blue","indigo","teal","coral","violet","amber"].map(k=>{const cur=st.acc||(this.props.defaultAccent??"blue");return {key:k,name:t.cn[k],k:k===cur?"on":"",on:k===cur?"true":"false",pick:()=>this.setState({acc:k,picker:false})};}),
+      showPanel:!st.explore, exploreOn:st.explore?"true":"false", exploreLabel:st.explore?t.back:t.ex, toggleExplore:()=>this.setState({explore:!st.explore}) }; }
+}
+</script>
+</body>
+</html>
